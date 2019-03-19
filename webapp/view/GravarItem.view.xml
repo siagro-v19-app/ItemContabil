@@ -1,0 +1,59 @@
+<mvc:View xmlns:core="sap.ui.core"
+xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m"
+controllerName="br.com.idxtecItemContabil.controller.GravarItem"
+xmlns:html="http://www.w3.org/1999/xhtml"
+xmlns:f="sap.ui.layout.form">
+	<App>
+		<pages>
+			<Page title="Gravar Item"
+				showNavButton="true"
+				navButtonPress="onVoltar">
+				<content>
+					<VBox class="sapUiSmallMargin">	
+						<f:SimpleForm id="SimpleFormChange480_Trial"
+						editable="true"
+						layout="ResponsiveGridLayout"
+						title="Novo Item"
+						labelSpanXL="4"
+						labelSpanL="4"
+						labelSpanM="4"
+						labelSpanS="12"
+						adjustLabelSpan="false"
+						emptySpanXL="0"
+						emptySpanL="0"
+						emptySpanM="0"
+						emptySpanS="0"
+						columnsXL="3"
+						columnsL="2"
+						columnsM="2"
+						singleContainerFullSize="false">
+							<f:content>
+								<Label text="Código" labelFor="codigo"/>
+								<Input id="codigo" value="{model>/Codigo}" required="true"/>
+						
+								<Label text="Descrição" labelFor="descricao"/>
+								<Input id="descricao" value="{model>/Descricao}" required="true"/>
+								
+								<Label text="Condição" labelFor="condicao" required="true"/>
+								<Select selectedKey="{model>/Condicao}"
+									id="condicao"> 
+									<core:Item key="CREDORA" text="CREDORA"/>
+									<core:Item key="DEVEDORA" text="DEVEDORA"/>
+								</Select>
+								
+								<Label text="Bloqueado" labelFor="bloqueado"/>
+								<CheckBox selected="{model>/Bloqueado}"/>
+							</f:content>
+						</f:SimpleForm>
+					</VBox>
+				</content>
+				<footer>
+					<Toolbar>
+						<ToolbarSpacer/>
+						<Button id="salvar" text="Salvar" press="onSalvar"/>
+					</Toolbar>
+				</footer>
+			</Page>
+		</pages>
+	</App>
+</mvc:View>
