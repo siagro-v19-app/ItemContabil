@@ -5,15 +5,14 @@ xmlns:html="http://www.w3.org/1999/xhtml"
 xmlns:f="sap.ui.layout.form">
 	<App>
 		<pages>
-			<Page title="Gravar Item"
-				showNavButton="true"
+			<Page showNavButton="true"
 				navButtonPress="onVoltar">
 				<content>
 					<VBox class="sapUiSmallMargin">	
 						<f:SimpleForm id="SimpleFormChange480_Trial"
 						editable="true"
 						layout="ResponsiveGridLayout"
-						title="Novo Item"
+						title="{view>/titulo}"
 						labelSpanXL="4"
 						labelSpanL="4"
 						labelSpanM="4"

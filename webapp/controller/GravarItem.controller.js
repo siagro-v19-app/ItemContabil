@@ -24,11 +24,17 @@ sap.ui.define([
 			var oParam = this.getOwnerComponent().getModel("parametros").getData();
 			var oJSONModel = this.getOwnerComponent().getModel("model");
 			var oModel = this.getOwnerComponent().getModel();
+			var oViewModel = this.getModel("view");
 			
 			this._operacao = oParam.operacao;
 			this._sPath = oParam.sPath;
 			
 			if (this._operacao === "incluir"){
+				
+				oViewModel.setData({
+					titulo: "Inserir Novo Item Contábil"
+				});
+				
 				var oNovoItem = {
 					"Id": 0,
 					"Codigo": "",
@@ -40,6 +46,11 @@ sap.ui.define([
 			oJSONModel.setData(oNovoItem);
 				
 			} else if (this._operacao === "editar"){
+				
+				oViewModel.setData({
+					titulo: "Editar Item Contábil"
+				});
+				
 				oModel.read(oParam.sPath,{
 					success: function(oData) {
 						oJSONModel.setData(oData);
@@ -52,9 +63,6 @@ sap.ui.define([
 		},
 		
 		onSalvar: function(){
-			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			var oHistory = History.getInstance();
-			var sPreviousHash = oHistory.getPreviousHash();
 			
 			if (this._checarCampos(this.getView())) {
 				MessageBox.information("Preencher todos os campos obrigatórios!");
@@ -63,19 +71,21 @@ sap.ui.define([
 			
 			if (this._operacao === "incluir") {
 				this._createItem();
-				if (sPreviousHash !== undefined) {
-					window.history.go(-1);
-				} else {
-					oRouter.navTo("itemcontabil", {}, true);
-				}
 			} else if (this._operacao === "editar") {
 				this._updateItem();
-				if (sPreviousHash !== undefined) {
+			}
+		},
+		
+		_goBack: function(){
+			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+			var oHistory = History.getInstance();
+			var sPreviousHash = oHistory.getPreviousHash();
+			
+			if (sPreviousHash !== undefined) {
 					window.history.go(-1);
 				} else {
 					oRouter.navTo("itemcontabil", {}, true);
 				}
-			}
 		},
 		
 		_createItem: function() {
@@ -86,7 +96,7 @@ sap.ui.define([
 
 			oModel.create("/ItemContabils", oDados, {
 				success: function() {
-					MessageBox.success("Dados gravados.");
+					MessageBox.success("Item inserido com sucesso!");
 				},
 				error: function(oError) {
 					MessageBox.error(oError.responseText);
@@ -102,7 +112,7 @@ sap.ui.define([
 			
 			oModel.update(this._sPath, oDados, {
 					success: function() {
-					MessageBox.success("Dados gravados.");
+					MessageBox.success("Item alterado com sucesso!");
 				},
 				error: function(oError) {
 					MessageBox.error(oError.responseText);
@@ -119,16 +129,12 @@ sap.ui.define([
 		},
 		
 		onVoltar: function(){
-			var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-			var oHistory = History.getInstance();
-			var sPreviousHash = oHistory.getPreviousHash();
+			this._goBack();
+		},
 		
-			if (sPreviousHash !== undefined) {
-				window.history.go(-1);
-			} else {
-				oRouter.navTo("itemcontabil", {}, true);
-			}
-		}
+		getModel: function(sModel){
+			return this.getOwnerComponent().getModel(sModel);
+		} 
 	});
 
 });
