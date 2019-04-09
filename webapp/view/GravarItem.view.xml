@@ -5,51 +5,53 @@ xmlns:html="http://www.w3.org/1999/xhtml"
 xmlns:f="sap.ui.layout.form">
 	<App>
 		<pages>
-			<Page showNavButton="true"
-				navButtonPress="onVoltar">
+			<Page showHeader="false">
 				<content>
-					<VBox class="sapUiSmallMargin">	
-						<f:SimpleForm id="SimpleFormChange480_Trial"
-						editable="true"
-						layout="ResponsiveGridLayout"
-						title="{view>/titulo}"
-						labelSpanXL="4"
-						labelSpanL="4"
-						labelSpanM="4"
-						labelSpanS="12"
-						adjustLabelSpan="false"
-						emptySpanXL="0"
-						emptySpanL="0"
-						emptySpanM="0"
-						emptySpanS="0"
-						columnsXL="3"
-						columnsL="2"
-						columnsM="2"
-						singleContainerFullSize="false">
-							<f:content>
-								<Label text="Código" labelFor="codigo"/>
-								<Input id="codigo" value="{model>/Codigo}" required="true"/>
-						
-								<Label text="Descrição" labelFor="descricao"/>
-								<Input id="descricao" value="{model>/Descricao}" required="true"/>
-								
-								<Label text="Condição" labelFor="condicao" required="true"/>
-								<Select selectedKey="{model>/Condicao}"
-									id="condicao"> 
-									<core:Item key="CREDORA" text="CREDORA"/>
-									<core:Item key="DEVEDORA" text="DEVEDORA"/>
-								</Select>
-								
-								<Label text="Bloqueado" labelFor="bloqueado"/>
-								<CheckBox selected="{model>/Bloqueado}"/>
-							</f:content>
-						</f:SimpleForm>
-					</VBox>
+					<Panel headerText="Item Contábil">
+						<VBox class="sapUiSmallMargin">	
+							<f:SimpleForm id="formItem"
+								editable="true"
+								layout="ResponsiveGridLayout"
+								labelSpanXL="4"
+								labelSpanL="4"
+								labelSpanM="4"
+								labelSpanS="12"
+								adjustLabelSpan="false"
+								emptySpanXL="0"
+								emptySpanL="0"
+								emptySpanM="0"
+								emptySpanS="0"
+								columnsXL="3"
+								columnsL="2"
+								columnsM="2"
+								singleContainerFullSize="false">
+								<f:content>
+									<core:Title text="{view>/titulo}"/>
+									<Label text="Código" labelFor="codigo"/>
+									<Input id="codigo" value="{model>/Codigo}" required="true"/>
+							
+									<Label text="Descrição" labelFor="descricao"/>
+									<Input id="descricao" value="{model>/Descricao}" required="true"/>
+									
+									<Label text="Condição" labelFor="condicao" required="true"/>
+									<Select selectedKey="{model>/Condicao}"
+										id="condicao"> 
+										<core:Item key="CREDORA" text="CREDORA"/>
+										<core:Item key="DEVEDORA" text="DEVEDORA"/>
+									</Select>
+									
+									<Label text="Bloqueado" labelFor="bloqueado"/>
+									<CheckBox selected="{model>/Bloqueado}"/>
+								</f:content>
+							</f:SimpleForm>
+						</VBox>
+					</Panel>
 				</content>
 				<footer>
 					<Toolbar>
 						<ToolbarSpacer/>
-						<Button id="salvar" text="Salvar" press="onSalvar"/>
+						<Button text="Salvar" icon="sap-icon://save" press="onSalvar"/>
+						<Button text="Cancelar" icon="sap-icon://reset" press="onVoltar"/>
 					</Toolbar>
 				</footer>
 			</Page>

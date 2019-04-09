@@ -2,8 +2,9 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"sap/ui/core/routing/History",
 	"sap/m/MessageBox",
-	"sap/ui/model/json/JSONModel"
-], function(Controller, History, MessageBox, JSONModel) {
+	"sap/ui/model/json/JSONModel",
+	"br/com/idxtecItemContabil/services/Session"
+], function(Controller, History, MessageBox, JSONModel, Session) {
 	"use strict";
 
 	return Controller.extend("br.com.idxtecItemContabil.controller.GravarItem", {
@@ -40,7 +41,11 @@ sap.ui.define([
 					"Codigo": "",
 					"Descricao": "",
 					"Condicao": "CREDORA",
-					"Bloqueado": false
+					"Bloqueado": false,
+					"Empresa" : Session.get("EMPRESA_ID"),
+					"Usuario": Session.get("USUARIO_ID"),
+					"EmpresaDetails": { __metadata: { uri: "/Empresas(" + Session.get("EMPRESA_ID") + ")"}},
+					"UsuarioDetails": { __metadata: { uri: "/Usuarios(" + Session.get("USUARIO_ID") + ")"}}
 				};
 				
 			oJSONModel.setData(oNovoItem);
@@ -54,9 +59,6 @@ sap.ui.define([
 				oModel.read(oParam.sPath,{
 					success: function(oData) {
 						oJSONModel.setData(oData);
-					},
-					error: function(oError) {
-						MessageBox.error(oError.responseText);
 					}
 				});
 			}
@@ -65,7 +67,7 @@ sap.ui.define([
 		onSalvar: function(){
 			
 			if (this._checarCampos(this.getView())) {
-				MessageBox.information("Preencher todos os campos obrigatórios!");
+				MessageBox.warning("Preencher todos os campos obrigatórios!");
 				return;
 			}
 			
@@ -74,6 +76,14 @@ sap.ui.define([
 			} else if (this._operacao === "editar") {
 				this._updateItem();
 			}
+		},
+		
+		_getDados: function(){
+			var oJSONModel = this.getOwnerComponent().getModel("model");
+			
+			var oDados = oJSONModel.getData();
+			
+			return oDados;
 		},
 		
 		_goBack: function(){
@@ -90,32 +100,30 @@ sap.ui.define([
 		
 		_createItem: function() {
 			var oModel = this.getOwnerComponent().getModel();
-			var oJSONModel = this.getOwnerComponent().getModel("model");
+			var that = this;
 			
-			var oDados = oJSONModel.getData();
-
-			oModel.create("/ItemContabils", oDados, {
+			oModel.create("/ItemContabils", this._getDados(), {
 				success: function() {
-					MessageBox.success("Item inserido com sucesso!");
-				},
-				error: function(oError) {
-					MessageBox.error(oError.responseText);
+					MessageBox.success("Item inserido com sucesso!", {
+						onClose: function(){
+							that._goBack(); 
+						}
+					});
 				}
 			});
 		},
 		
 		_updateItem: function() {
 			var oModel = this.getOwnerComponent().getModel();
-			var oJSONModel = this.getOwnerComponent().getModel("model");
+			var that = this;
 			
-			var oDados = oJSONModel.getData();
-			
-			oModel.update(this._sPath, oDados, {
+			oModel.update(this._sPath, this._getDados(), {
 					success: function() {
-					MessageBox.success("Item alterado com sucesso!");
-				},
-				error: function(oError) {
-					MessageBox.error(oError.responseText);
+					MessageBox.success("Item alterado com sucesso!", {
+						onClose: function(){
+							that._goBack();
+						}
+					});
 				}
 			});
 		},
