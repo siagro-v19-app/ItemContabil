@@ -7,8 +7,8 @@ xmlns:f="sap.ui.layout.form">
 		<pages>
 			<Page showHeader="false">
 				<content>
-					<Panel headerText="Item Contábil">
-						<VBox class="sapUiSmallMargin">	
+					<VBox class="sapUiSmallMargin">
+						<Panel headerText="Item Contábil">
 							<f:SimpleForm id="formItem"
 								editable="true"
 								layout="ResponsiveGridLayout"
@@ -44,8 +44,8 @@ xmlns:f="sap.ui.layout.form">
 									<CheckBox selected="{model>/Bloqueado}"/>
 								</f:content>
 							</f:SimpleForm>
-						</VBox>
-					</Panel>
+						</Panel>
+					</VBox>
 				</content>
 				<footer>
 					<Toolbar>

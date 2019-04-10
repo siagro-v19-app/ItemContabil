@@ -8,8 +8,8 @@ xmlns:t="sap.ui.table">
 		<pages>
 			<Page showHeader="false">
 				<content>
-					<Panel headerText="Item Contábil">
-						<VBox class="sapUiSmallMargin">
+					<VBox class="sapUiSmallMargin">
+						<Panel headerText="Item Contábil">
 							<t:Table id="tableItemContabil"
 								rows="{path: '/ItemContabils'}"
 								selectionMode="Single"
@@ -54,8 +54,8 @@ xmlns:t="sap.ui.table">
 									</Toolbar>
 								</t:footer>
 							</t:Table>
-						</VBox>
-					</Panel>
+						</Panel>
+					</VBox>
 				</content>
 				<footer>
 					<Toolbar>
